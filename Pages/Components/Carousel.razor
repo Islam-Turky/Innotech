@@ -1,0 +1,67 @@
+﻿@namespace CustomComponents
+@inject IJSRuntime JSRuntime
+
+<div id="@carouselID" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-indicators">
+            @for(int i=0; i<images?.Count; i++)
+            {
+                @if(i == 0)
+                {
+                    <button type="button" data-bs-target="#@carouselID" data-bs-slide-to="@i" class="active" aria-current="true" aria-label={$"Slide {i+1}"}></button>
+                }
+                else
+                {
+                    <button type="button" data-bs-target="#@carouselID" data-bs-slide-to="@i" aria-label={$"Slide {i+1}"}></button>
+                }
+            }
+        </div>
+    @foreach(string img in images!)
+    {
+        @if(images is not null)
+        {    
+            @if(img == images[0])
+            {                
+                <div class="carousel-item active" itemid="@img">
+                    <img src="@img" class="d-block w-100 h-auto" alt="img">
+                 </div>
+            }
+            else
+            {
+                <div class="carousel-item" itemid="@img">
+                    <img src="@img" class="d-block w-100 h-auto" alt="img">
+                </div>
+            }
+            }
+            else
+            {
+                 <div itemid="@img">
+                    Images Not Exist or Null
+                </div>
+            }
+    }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+@code {
+    [Parameter] public List<string>? images { set; get; }
+    const string carouselID = "carouselExample";
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            object[] param = { carouselID };
+            await JSRuntime.InvokeVoidAsync("StartCarousel", param);
+            StateHasChanged();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

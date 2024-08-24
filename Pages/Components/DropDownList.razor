@@ -1,0 +1,24 @@
+﻿@namespace CustomComponents
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        @listName
+    </button>
+    <ul class="dropdown-menu">
+        @foreach(string item in Items!)
+        {
+            @if(Items is not null)
+            {
+                <li><a class="dropdown-item" href="#" itemid="@item">@item</a></li>
+            }else
+            {
+                <li><a class="dropdown-item" href="#" itemid="@item">Items Not Found</a></li>
+            }
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter] public List<string>? Items { set; get; }
+    [Parameter] public string? listName { set; get; }
+}

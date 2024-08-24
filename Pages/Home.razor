@@ -1,0 +1,21 @@
+﻿@page "/"
+@using CustomComponents
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<div>Drop Down List</div>
+<DropDownList listName="@name" Items="@items"/>
+
+<div>Carousel</div>
+<Carousel images="@imgs"/>
+
+
+@code {
+    List<string> imgs = new List<string>() { "img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg" };
+    List<string> items = new List<string>() { "Header", "Nav", "Footer" };
+    string name = "Page List";
+}
